@@ -29,3 +29,21 @@
          │
          ▼
 5. You query it (dbt model or DuckDB CLI)
+
+## When to use Model vs CLI
+- Use Model when you will reuse the query or share it with others (Production)
+- Use CLI when your exploring, debugging, or doing a one off analysis (Exploratory)
+
+## Workflow 
+1. Explore in CLI
+2. Write the final query as dbt model
+3. Verify in CLI
+
+## Process when bulding a model
+1. Think about question "What do you want to know?"
+2. Look at your data, "What columns are available?"
+3. Write SQL: Start simple, then add complexity.
+4. Run it: dbt run
+5. Check the output: Query the resulting table in DuckDB.
+5. Iterate: Add more columns, filters, joins, etc.
+
