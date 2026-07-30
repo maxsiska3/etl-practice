@@ -14,6 +14,10 @@
     1. **Read** data from source table (or seeds) 
     2. **Transform** it (clean, join, aggregate, filter) 
     3. **Write** results back in a new table 
+- Think of cooking
+    1. Wash vegetables, peel onions
+    2. Chop, mix, cook
+    3. Plate the food
 
 ## Full data flow
 1. CSV file (seeds/spotify_data.csv)
@@ -47,3 +51,14 @@
 5. Check the output: Query the resulting table in DuckDB.
 5. Iterate: Add more columns, filters, joins, etc.
 
+## Staging Models - Cleanup Crew
+- Purpose - takes the raw data as it is and makes it usable
+- Does things like:
+    - Renames Columns
+    - Cast Data Types
+    - Handle Nulls
+    - Fix Casing
+    - Deduplicate
+
+## Mart Models
+- Explain this
