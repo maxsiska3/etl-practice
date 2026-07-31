@@ -116,8 +116,19 @@ dev D SELECT COUNT(*) FROM raw_spotify WHERE "Feature Streams (in millions)"  is
 - **Result**: There are 42 rows with NULL values over 3 different columns
 - **Diagnosis**: We have to find a way to fill these null values without affecting the data
   - What I have determined is that the reason the null values are there is because the artist most likely has 0 streams as features/solo/lead. So we will fill those values with 0.
+- **Implementation**: Renamed column headers and filled nulls with 0 - complete
 
 - **SQL Reminders**:
 
 1. Using SELECT with COALESCE(column_name, fill_value) - this fills the value
 2. If the column name has a space or special characters when selecting surround by quotes
+
+## Mart Model Current Situation
+
+- Models we can make *Date of CSV file is 07/17/2026*
+
+1. Artist Stream Summary - complete
+2. Average Streams by Genre
+3. Average Streams by Country
+4. Top 5 Languages by Total Streams
+5. Top 10 Artist by Total Streams

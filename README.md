@@ -1,2 +1,1 @@
-# etl-practice
-
+# Spotify Analytics ETL with dbt and DuckDB

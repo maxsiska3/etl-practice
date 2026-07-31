@@ -9,4 +9,4 @@ select
     COALESCE("Lead Streams (in millions)", 0) as lead_streams_million,
     COALESCE("Feature Streams (in millions)", 0) as feature_streams_million,
     COALESCE("Solo Streams (in millions)", 0) as solo_streams_million
-from raw_spotify
+from {{ ref('raw_spotify') }}
