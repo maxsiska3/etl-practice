@@ -3,3 +3,7 @@ target/
 dbt_packages/
 logs/
 .env
+
+# Local DuckDB development database
+*.duckdb
+*.duckdb.wal
