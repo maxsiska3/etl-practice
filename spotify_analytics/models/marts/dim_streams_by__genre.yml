@@ -1,0 +1,16 @@
+Version: 2
+
+models:
+  - name: dim_streams_by__genre
+    description: "Returns a table that shows the average total streams (in millions) per genre,
+                  also we added a 5-artist threshold for this model. (The genre has to have 5 artists)"
+    columns:
+      - name: average_per_million
+        description: "average total streams in millions"
+        tests:
+          - not_null
+      - name: primary_genre
+        description: "each genre"
+        tests:
+          - not_null
+          - unique
