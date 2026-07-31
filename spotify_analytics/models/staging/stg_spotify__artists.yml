@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_spotify__artists
+    description: "Cleans up column header names and transforms it into lowercase with _ for spaces.
+                  Fills null values with 0's due to artist not having any solo/feature/lead streams in millions."
+    columns:
+      - name: artist_name
+        description: "artist's name displayed"
+        tests:
+          - not_null
+          - unique
+      - name: sex
+        description: "artist's gender"
+      - name: country
+        description: "where the artist is from"
+      - name: language
+        description: "what language the artist sings in"
+      - name: primary_genre
+        description: "what genre the artist primarily sings in"
+      - name: artist_type
+        description: "solo or group"
+        tests:
+          - accepted_values:
+              values:
+              - Solo
+              - Group
+      - name: total_streams_million
+        description: "amount of total streams in millions"
+        tests:
+        - not_null
+      - name: lead_streams_million
+        description: "amount of lead streams in millions"
+        tests:
+        - not_null
+      - name: feature_streams_million
+        description: amount of feature streams in millions
+        tests:
+        - not_null
+      - name: solo_streams_million
+        description: "amount of lead streams in millions"
+        tests:
+        - not_null
