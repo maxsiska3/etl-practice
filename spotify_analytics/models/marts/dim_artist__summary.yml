@@ -1,9 +1,8 @@
 version: 2
 
 models:
-  - name: stg_spotify__artists
-    description: "Cleans up column header names and transforms it into lowercase with _ for spaces.
-                  Fills null values with 0's due to artist not having any solo/feature/lead streams in millions."
+  - name: dim_artist__summary
+    description: "Visualization ready table ready to integrate"
     columns:
       - name: artist_name
         description: "artist's name displayed"
@@ -29,16 +28,16 @@ models:
       - name: total_streams_million
         description: "amount of total streams in millions"
         tests:
-        - not_null
+          - not_null
       - name: lead_streams_million
         description: "amount of lead streams in millions"
         tests:
-        - not_null
+          - not_null
       - name: feature_streams_million
-        description: amount of feature streams in millions
+        description: "amount of feature streams in millions"
         tests:
-        - not_null
+          - not_null
       - name: solo_streams_million
         description: "amount of lead streams in millions"
         tests:
-        - not_null
+          - not_null
