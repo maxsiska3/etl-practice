@@ -113,5 +113,11 @@ dev D SELECT COUNT(*) FROM raw_spotify WHERE "Feature Streams (in millions)"  is
 └──────────────┘
 ```
 
-- Result: There are 42 rows with NULL values over 3 different columns
-- Diagnosis: We have to find a way to fill these null values without affecting the data.
+- **Result**: There are 42 rows with NULL values over 3 different columns
+- **Diagnosis**: We have to find a way to fill these null values without affecting the data
+  - What I have determined is that the reason the null values are there is because the artist most likely has 0 streams as features/solo/lead. So we will fill those values with 0.
+
+- **SQL Reminders**:
+
+1. Using SELECT with COALESCE(column_name, fill_value) - this fills the value
+2. If the column name has a space or special characters when selecting surround by quotes
