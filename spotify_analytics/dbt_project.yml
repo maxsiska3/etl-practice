@@ -31,4 +31,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   stg_spotify__artists:
+  dim_artist__summary:
+  dim_streams_by__genre:
     # Config indicated by + and applies to all files under models/example/

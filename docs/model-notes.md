@@ -87,7 +87,7 @@
 
 ## Staging Model Current Situation
 
-- Checking for nulls in `raw_spotify`:
+### Checking for nulls in `raw_spotify`:
 
 ```sql
 dev D SELECT COUNT(*) FROM raw_spotify WHERE "Solo Streams (in millions)" is  NULL;
@@ -118,17 +118,55 @@ dev D SELECT COUNT(*) FROM raw_spotify WHERE "Feature Streams (in millions)"  is
   - What I have determined is that the reason the null values are there is because the artist most likely has 0 streams as features/solo/lead. So we will fill those values with 0.
 - **Implementation**: Renamed column headers and filled nulls with 0 - complete
 
-- **SQL Reminders**:
+### SQL Reminders:
 
 1. Using SELECT with COALESCE(column_name, fill_value) - this fills the value
 2. If the column name has a space or special characters when selecting surround by quotes
 
 ## Mart Model Current Situation
 
-- Models we can make *Date of CSV file is 07/17/2026*
+### Models we can make *Date of CSV file is 07/17/2026*
 
 1. Artist Stream Summary - complete
-2. Average Streams by Genre
+2. Average Streams by Genre - wip
 3. Average Streams by Country
 4. Top 5 Languages by Total Streams
 5. Top 10 Artist by Total Streams
+
+### New Discovery: we have a small sample size problem
+
+```sql
+dev D SELECT COUNT(primary_genre) as count_genre, primary_genre FROM dim_artist__summary GROUP BY primary_genre ORDER BY count_genre;
+┌─────────────┬──────────────────┐
+│ count_genre │  primary_genre   │
+│    int64    │     varchar      │
+├─────────────┼──────────────────┤
+│           1 │ Nu Metal         │
+│           1 │ Children's Music │
+│           1 │ Spoken Word      │
+│           2 │ Reggae           │
+│           2 │ Afrobeats        │
+│           3 │ Soundtrack       │
+│           3 │ Bachata          │
+│           3 │ Soul             │
+│           4 │ Folk             │
+│           8 │ Metal            │
+│           9 │ Alternative      │
+│           9 │ Sertanjeo        │
+│          10 │ Country          │
+│          11 │ Filmi            │
+│          11 │ K-Pop            │
+│          19 │ Regional Mexican │
+│          22 │ EDM              │
+│          30 │ Latin            │
+│          31 │ R&B              │
+│          43 │ Reggaeton        │
+│          60 │ Rock             │
+│         102 │ Pop              │
+│         115 │ Hip-Hop          │
+└─────────────┴──────────────────┘
+  23 rows              2 columns
+```
+
+- **Diagnosis**: In the staging model we might have to filter out genres if they have a count lower than five because they are skewing the graphs
+- **Implementation**: Filtered using a having count greater than five after group by
