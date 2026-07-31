@@ -1,0 +1,14 @@
+# Python environments and bytecode
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local configuration and OS files
+.env
+.env.*
+.DS_Store
+CLAUDE.md
+
+# Local build and runtime output
+logs/
