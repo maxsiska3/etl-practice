@@ -87,7 +87,7 @@
 
 ## Staging Model Current Situation
 
-### Checking for nulls in `raw_spotify`:
+### Checking for nulls in `raw_spotify`
 
 ```sql
 dev D SELECT COUNT(*) FROM raw_spotify WHERE "Solo Streams (in millions)" is  NULL;
@@ -118,7 +118,7 @@ dev D SELECT COUNT(*) FROM raw_spotify WHERE "Feature Streams (in millions)"  is
   - What I have determined is that the reason the null values are there is because the artist most likely has 0 streams as features/solo/lead. So we will fill those values with 0.
 - **Implementation**: Renamed column headers and filled nulls with 0 - complete
 
-### SQL Reminders:
+### SQL Reminders
 
 1. Using SELECT with COALESCE(column_name, fill_value) - this fills the value
 2. If the column name has a space or special characters when selecting surround by quotes
@@ -128,8 +128,8 @@ dev D SELECT COUNT(*) FROM raw_spotify WHERE "Feature Streams (in millions)"  is
 ### Models we can make *Date of CSV file is 07/17/2026*
 
 1. Artist Stream Summary - complete
-2. Average Streams by Genre - wip
-3. Average Streams by Country
+2. Average Streams by Genre - complete
+3. Average Streams by Country - wip
 4. Top 5 Languages by Total Streams
 5. Top 10 Artist by Total Streams
 
@@ -168,5 +168,61 @@ dev D SELECT COUNT(primary_genre) as count_genre, primary_genre FROM dim_artist_
   23 rows              2 columns
 ```
 
-- **Diagnosis**: In the staging model we might have to filter out genres if they have a count lower than five because they are skewing the graphs
+- **Diagnosis**: In the specific model we might have to filter out genres if they have a count lower than five because they are skewing the graphs
+- **Implementation**: Filtered using a having count greater than five after group by
+
+### We have a consisting problem
+
+dev D SELECT COUNT(country) as count_country, country FROM dim_artist__summary GROUP BY country ORDER BY count_country;
+┌───────────────┬─────────────────────┐
+│ count_country │       country       │
+│     int64     │       varchar       │
+├───────────────┼─────────────────────┤
+│             1 │ Philippines         │
+│             1 │ Denmark             │
+│             1 │ Pakistan            │
+│             1 │ Chile               │
+│             1 │ Belgium             │
+│             1 │ Trinidad and Tobago │
+│             1 │ Cuba                │
+│             1 │ Senegal             │
+│             1 │ DR Congo            │
+│             1 │ Guatemala           │
+│             1 │ South Africa        │
+│             1 │ Russia              │
+│             1 │ New Zealand         │
+│             1 │ Iceland             │
+│             1 │ Panama              │
+│             1 │ Barbados            │
+│             1 │ Nepal               │
+│             1 │ Morocco             │
+│             1 │ Venezuela           │
+│             1 │ Austria             │
+│             2 │ Norway              │
+│             2 │ Nigeria             │
+│             2 │ Dominican Republic  │
+│             2 │ Scotland            │
+│             2 │ Netherlands         │
+│             2 │ Japan               │
+│             2 │ Jamaica             │
+│             3 │ Italy               │
+│             4 │ Ireland             │
+│             5 │ France              │
+│             5 │ Sweden              │
+│             6 │ Spain               │
+│             7 │ Australia           │
+│             7 │ Germany             │
+│             9 │ Argentina           │
+│            11 │ South Korea         │
+│            13 │ India               │
+│            15 │ Brazil              │
+│            16 │ Colombia            │
+│            18 │ Canada              │
+│            27 │ Mexico              │
+│            55 │ United Kingdom      │
+│           265 │ United States       │
+└───────────────┴─────────────────────┘
+  43 rows                   2 columns
+
+- **Diagnosis**: Same problem as before we will have to filter out the countries with less than five artists  
 - **Implementation**: Filtered using a having count greater than five after group by

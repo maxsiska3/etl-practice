@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_streams_by__country
+    description: "average total streams by country"
+    columns:
+      - name: avg_streams_million
+        description: "average total streams in millions"
+        tests:
+          - not_null
+      - name: country
+        description: "country name"
+        tests:
+          - not_null
+          - unique
