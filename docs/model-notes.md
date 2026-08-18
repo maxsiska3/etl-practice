@@ -40,7 +40,7 @@
 ## When to use Model vs CLI
 
 - Use Model when you will reuse the query or share it with others (Production)
-- Use CLI when your exploring, debugging, or doing a one off analysis (Exploratory)
+- Use CLI when you're exploring, debugging, or doing a one off analysis (Exploratory)
 
 ## Workflow
 
@@ -48,7 +48,7 @@
 2. Write the final query as dbt model
 3. Verify in CLI
 
-## Process when bulding a model
+## Process when building a model
 
 1. Think about question "What do you want to know?"
 2. Look at your data, "What columns are available?"
@@ -68,7 +68,7 @@
   - Deduplicate
 - Does not do things like:
   - No joins
-  - No heavy business
+  - No heavy business logic
   - No aggregates
 
 ## Mart Models - The Answer Keys
@@ -76,13 +76,13 @@
 - Fact Tables (fct_)
   - **What**: Measurements, events, or transactions
   - **Data**: Numbers you add up (streams, rev, quantity)
-  - **Naming**: fct_[process] (fct_[streams], fct[orders])
+  - **Naming**: fct_[process] (fct_streams, fct_orders)
   - **Ex. Columns**: artist_key, streams, track count
 
 - Dimension Tables (dim_)
   - **What**: Attributes, people, places, or things.
   - **Data**: Descriptive text (artist_name, genre, country)
-  - **Naming**: dim_[entity] (fct_[artist], fct[date])
+  - **Naming**: dim_[entity] (dim_artist, dim_date)
   - **Ex. Columns**: artist_key PK artist_name, followers
 
 ## Staging Model Current Situation
@@ -129,8 +129,8 @@ dev D SELECT COUNT(*) FROM raw_spotify WHERE "Feature Streams (in millions)"  is
 
 1. Artist Stream Summary - complete
 2. Average Streams by Genre - complete
-3. Average Streams by Country - wip
-4. Top 5 Languages by Total Streams
+3. Average Streams by Country - complete
+4. Top 5 Languages by Total Streams - complete
 5. Top 10 Artist by Total Streams
 
 ### New Discovery: we have a small sample size problem
@@ -171,8 +171,9 @@ dev D SELECT COUNT(primary_genre) as count_genre, primary_genre FROM dim_artist_
 - **Diagnosis**: In the specific model we might have to filter out genres if they have a count lower than five because they are skewing the graphs
 - **Implementation**: Filtered using a having count greater than five after group by
 
-### We have a consisting problem
+### Same sample size problem, now with country
 
+```sql
 dev D SELECT COUNT(country) as count_country, country FROM dim_artist__summary GROUP BY country ORDER BY count_country;
 ┌───────────────┬─────────────────────┐
 │ count_country │       country       │
@@ -223,6 +224,7 @@ dev D SELECT COUNT(country) as count_country, country FROM dim_artist__summary G
 │           265 │ United States       │
 └───────────────┴─────────────────────┘
   43 rows                   2 columns
+```
 
-- **Diagnosis**: Same problem as before we will have to filter out the countries with less than five artists  
+- **Diagnosis**: Same problem as before, we will have to filter out the countries with less than five artists
 - **Implementation**: Filtered using a having count greater than five after group by
