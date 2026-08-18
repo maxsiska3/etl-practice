@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_language_by__streams
+    description: "Top 5 Languages by Total Streams"
+    columns:
+      - name: language
+        description: "Language of Artist"
+        tests:
+          - not_null
+          - unique
+      - name: total_streams_million
+        description: "sum of total streams in millions across all artists of this language"
+        tests:
+          - not_null
