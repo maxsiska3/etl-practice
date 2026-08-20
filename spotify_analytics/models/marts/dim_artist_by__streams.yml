@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_artist_by__streams
+    description: "Top 10 Artists by Total Streams"
+    columns:
+      - name: artist_name
+        description: "Name of Artist"
+        tests:
+          - not_null
+          - unique
+      - name: total_streams_million
+        description: "Total Streams for artists in millions"
+        tests:
+          - not_null
