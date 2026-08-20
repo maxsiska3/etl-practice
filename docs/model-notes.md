@@ -23,19 +23,19 @@
 
 ## Full data flow
 
-1. CSV file (seeds/spotify_data.csv)
+1. CSV file (`seeds/raw_spotify.csv`)
          │
          ▼
-2. dbt seed (loads CSV into DuckDB as a table called "spotify_data")
+2. dbt seed (loads the CSV into DuckDB as `raw_spotify`)
          │
          ▼
-3. Your model (reads from spotify_data, transforms it)
+3. Staging model (cleans and standardizes `raw_spotify`)
          │
          ▼
-4. Output table (creates a new table called "spotify_analytics" in DuckDB)
+4. Mart models (create analysis-ready tables in DuckDB)
          │
          ▼
-5. You query it (dbt model or DuckDB CLI)
+5. Tableau CSV exports (provide the dashboard data sources)
 
 ## When to use Model vs CLI
 
@@ -228,3 +228,29 @@ dev D SELECT COUNT(country) as count_country, country FROM dim_artist__summary G
 
 - **Diagnosis**: Same problem as before, we will have to filter out the countries with less than five artists
 - **Implementation**: Filtered using a having count greater than five after group by
+
+## Tableau Dashboard Current Situation
+
+### Dashboard implementation - complete
+
+The four analytical marts were exported from DuckDB as CSV files and added to a Tableau packaged workbook.
+
+1. Top 10 artists by total streams - complete
+2. Top 5 languages by total streams - complete
+3. Average streams by country - complete
+4. Average streams by genre - complete
+
+### Dashboard artifacts
+
+- Packaged workbook: `dashboards/spotify_analytics_dashboard.twbx`
+- Dashboard preview: `dashboards/spotify_analytics_dashboard.png`
+- Tableau data sources: `spotify_analytics/exports/`
+
+### Current refresh workflow
+
+1. Run `dbt build` to rebuild and test the models.
+2. Export the four final marts from DuckDB to CSV.
+3. Refresh the CSV data sources in Tableau.
+4. Save the updated packaged workbook and dashboard preview.
+
+This workflow is currently manual. Automating the dbt build and Tableau export is a future orchestration task.

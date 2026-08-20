@@ -71,18 +71,21 @@ This project will serve as your portfolio piece and demonstrate real-world data 
 ### Step 1: Choose Your BI Tool
 - **PowerBI** – strong for corporate, mid-market, and Microsoft shops.
 - **Tableau** – better for advanced visualizations, often higher pay.
-- Pick **one** and focus on it.
+- Pick **one** and focus on it. **Completed: Tableau selected.**
 
 ### Step 2: Connect to DuckDB
 - Install DuckDB ODBC/JDBC driver or use the native connector.
 - Import your `marts` tables into the BI tool.
+- **Completed for the local project:** exported the four final marts to CSV for Tableau.
 
 ### Step 3: Build a Dashboard
 - Create 3–5 charts (KPIs, trends, breakdowns).
 - Ensure it's interactive (filters, drill-downs).
 - Publish to a service (PowerBI Service or Tableau Public) if possible.
+- **Completed locally:** created four Tableau views and saved a packaged workbook and dashboard preview.
+- **Remaining:** publish the dashboard to Tableau Public.
 
-**✅ Milestone:** You have a live dashboard that updates when the pipeline runs.
+**Milestone in progress:** The dashboard is complete, but its CSV refresh is still manual.
 
 ---
 
@@ -165,9 +168,9 @@ Combine all phases into a single portfolio project:
 
 ## 🎯 Next Action (Right Now)
 
-1. Install `dbt` and `duckdb` on your local machine.
-2. Follow the dbt DuckDB Quickstart guide.
-3. Pick a public dataset and start building your first model.
-4. Commit everything to a GitHub repo.
+1. Publish the completed dashboard to Tableau Public.
+2. Commit the dbt models, exported marts, workbook, screenshot, and documentation.
+3. Begin Phase 2 by containerizing the dbt project.
+4. Create an Airflow DAG to automate the build, tests, and mart exports.
 
 **You are now on the path to becoming a competitive Analytics Engineer.**
