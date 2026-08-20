@@ -131,7 +131,7 @@ dev D SELECT COUNT(*) FROM raw_spotify WHERE "Feature Streams (in millions)"  is
 2. Average Streams by Genre - complete
 3. Average Streams by Country - complete
 4. Top 5 Languages by Total Streams - complete
-5. Top 10 Artist by Total Streams
+5. Top 10 Artist by Total Streams - complete
 
 ### New Discovery: we have a small sample size problem
 
